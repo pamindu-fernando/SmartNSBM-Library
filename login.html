@@ -1,21 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+            <div class="p-6 text-center">
+                <div class="mx-auto mb-4 flex h-20 w-auto items-center justify-center">
+                    <img src="logo.png" alt="Library Logo" class="h-16 w-auto object-contain">
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900">Library Management System</h2>
+                <p class="text-sm text-gray-500">Sign in to access the campus library</p>
+            </div>
 
-<h2>Login</h2>
+            <div class="p-6 pt-0">
+                <script>
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('error')) {
+                        document.write(`
+                            <div class="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 flex items-center gap-3 text-red-800">
+                                <i data-lucide="alert-circle" class="h-4 w-4"></i>
+                                <span class="text-sm font-medium">Invalid username or password</span>
+                            </div>
+                        `);
+                    }
+                    if (urlParams.get('status') === 'success') {
+                        document.write(`
+                            <div class="mb-4 p-3 rounded-lg bg-green-50 border border-green-200 flex items-center gap-3 text-green-800">
+                                <i data-lucide="check-circle" class="h-4 w-4"></i>
+                                <span class="text-sm font-medium">Account created! Please login.</span>
+                            </div>
+                        `);
+                    }
+                </script>
 
-<form action="login_process.php" method="POST">
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+                <form action="login_process.php" method="POST" class="space-y-4">
+                    <div class="space-y-2">
+                        <label for="username" class="text-sm font-medium leading-none">Username</label>
+                        <input name="username" id="username" type="text" placeholder="Enter username" required
+                            class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600 transition-all">
+                    </div>
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
+                    <div class="space-y-2">
+                        <label for="password" class="text-sm font-medium leading-none">Password</label>
+                        <input name="password" id="password" type="password" placeholder="Enter password" required
+                            class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600 transition-all">
+                    </div>
 
-    <button type="submit">Login</button>
-</form>
+                    <button type="submit"
+                        class="w-full inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 transition-colors shadow-sm">
+                        Sign In
+                    </button>
+                </form>
 
+                <div class="mt-6 text-center text-sm">
+                    <p class="text-gray-600">
+                        Don't have an account? 
+                        <a href="signup.html" class="font-semibold text-green-600 hover:text-green-700 hover:underline transition-all">
+                            Sign up here
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
