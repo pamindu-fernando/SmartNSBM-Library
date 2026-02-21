@@ -1,38 +1,37 @@
 <?php
+// login_process.php
 session_start();
-include "db_config.php";
+require_once 'db_config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    
-    $email = mysqli_real_escape_string($conn, $email);
-
-    $sql = "SELECT * FROM users WHERE email='$email'";
+    // Query the database
+    $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
     $result = mysqli_query($conn, $sql);
 
-    if (mysqli_num_rows($result) == 1) {
-        $row = mysqli_fetch_assoc($result);
+    if (mysqli_num_rows($result) === 1) {
+        $user = mysqli_fetch_assoc($result);
 
-        
-        if (password_verify($password, $row['password'])) {
+        // Store user info in Session
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
 
-            
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['email'] = $row['email'];
-
-            echo "Login successful!";
+        // Redirect based on role
+        if ($user['role'] === 'admin') {
             header("Location: main.php");
-            exit();
-
         } else {
-            echo "Wrong password!";
+            header("Location: user.php");
         }
-
+        exit();
     } else {
-        echo "User not found!";
+        // Wrong credentials
+        header("Location: login.html?error=1");
+        exit();
     }
+} else {
+    header("Location: login.html");
 }
 ?>
