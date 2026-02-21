@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management - Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50">
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+            
+            <div class="p-6 text-center">
+                <div class="mx-auto mb-4 flex h-16 w-auto items-center justify-center">
+                    <i data-lucide="user-plus" class="h-12 w-12 text-green-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900">Create Account</h2>
+                <p class="text-sm text-gray-500">Join the Campus Library Community</p>
+            </div>
+
+            <div class="p-6 pt-0">
+                <div id="error-alert" class="hidden mb-4 p-3 rounded-lg bg-red-50 border border-red-200 flex items-center gap-3 text-red-800 text-sm font-medium">
+                    <i data-lucide="alert-circle" class="h-4 w-4"></i>
+                    <span id="error-message"></span>
+                </div>
+
+                <form id="signup-form" action="signup_process.php" method="POST" class="space-y-4">
+                    <div class="space-y-2">
+                        <label for="fullname" class="text-sm font-medium leading-none">Full Name</label>
+                        <input name="fullname" id="fullname" type="text" placeholder="John Doe" required
+                            class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600 transition-all">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="username" class="text-sm font-medium leading-none">Username</label>
+                        <input name="username" id="username" type="text" placeholder="Choose a username" required
+                            class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600 transition-all">
+                        <p class="text-[10px] text-gray-400">Must be at least 6 characters (more than 5).</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label for="password" class="text-sm font-medium leading-none">Password</label>
+                            <input name="password" id="password" type="password" placeholder="••••••••" required
+                                class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600 transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="confirm_password" class="text-sm font-medium leading-none">Confirm</label>
+                            <input id="confirm_password" type="password" placeholder="••••••••" required
+                                class="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600 transition-all">
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-gray-400">Min 8 chars, 1 Capital letter, 1 Symbol (!@#$%^&*).</p>
+
+                    <button type="submit"
+                        class="w-full inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none transition-colors shadow-sm mt-2">
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center text-sm border-t border-gray-100 pt-6">
+                    <p class="text-gray-600">
+                        Already have an account? 
+                        <a href="login.html" class="font-semibold text-green-600 hover:text-green-700 hover:underline transition-all">
+                            Sign in
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const form = document.getElementById('signup-form');
+        const errorAlert = document.getElementById('error-alert');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', function(e) {
+            const username = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm_password').value;
+
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+
+            if (username.length <= 5) {
+                e.preventDefault();
+                showError("Username must be more than 5 characters long.");
+            } 
+            else if (!passwordRegex.test(pass)) {
+                e.preventDefault();
+                showError("Password must be 8+ characters, with a capital letter and a symbol (!@#$%).");
+            } 
+            else if (pass !== confirm) {
+                e.preventDefault();
+                showError("Passwords do not match.");
+            }
+        });
+
+        function showError(msg) {
+            errorMessage.innerText = msg;
+            errorAlert.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
