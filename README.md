@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-# NSBM-Library-Management-System-
-=======
-# Library Management System (LMS)
+# Library Management System (NSBM)
 
 A robust, secure system designed to streamline library operations. This platform allows admins to manage book catalogs while providing students with a secure environment to browse and download digital resources.
 
@@ -109,6 +106,4 @@ A robust, secure system designed to streamline library operations. This platform
 - **Students:** Sign up for a new account using the secure registration form.
 
 ## License
-Distributed under the MIT License.
-EOF
->>>>>>> c26695e (added the files and folders that i was supposed to upload)
+Distributed under the public license.
