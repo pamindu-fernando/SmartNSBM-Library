@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Security check: Redirect if not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.html");
     exit();
@@ -8,7 +7,6 @@ if (!isset($_SESSION['user_id'])) {
 
 include 'db_config.php';
 
-// Fetch all books from the database for the user view
 $result = mysqli_query($conn, "SELECT * FROM books ORDER BY id DESC");
 $db_books = [];
 while ($row = mysqli_fetch_assoc($result)) {
@@ -174,7 +172,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 searchTerm: '',
                 books: <?php echo json_encode($db_books); ?>,
                 
-                // NEW: State for details modal
+                
                 detailsOpen: false,
                 selectedBook: null,
 
@@ -199,7 +197,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                     );
                 },
 
-                // NEW: Function to open details modal
+                
                 openDetails(book) {
                     this.selectedBook = book;
                     this.detailsOpen = true;
