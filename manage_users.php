@@ -2,17 +2,17 @@
 session_start();
 require_once 'db_config.php';
 
-// Security check: Only admins should see this page
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.html");
     exit();
 }
 
-// Handle User Deletion
+
 if (isset($_GET['delete_id'])) {
     $id = mysqli_real_escape_string($conn, $_GET['delete_id']);
     
-    // Prevent admin from deleting themselves
+    
     if ($id == $_SESSION['user_id']) {
         $msg = "You cannot delete your own account.";
     } else {
@@ -23,7 +23,7 @@ if (isset($_GET['delete_id'])) {
     }
 }
 
-// Fetch all users
+
 $users = mysqli_query($conn, "SELECT id, fullname, username, role, created_at FROM users");
 ?>
 
